@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- Header -->
+<div th:insert="~{header :: header}">
+    <header class="tm-header">
+
+    </header>
+</div>
+<form action="/addPost" method="post" class="tm-contact-form">
+
+        <div class="form-group">
+            <input type="hidden" name="id" th:if="${post != null}" th:value="${post.id}">
+        </div>
+        <div class="form-group">
+            <input type="text" id="contact_name" name="title" class="form-control" placeholder="Title" th:text="${post.title}">
+        </div>
+        <div class="form-group">
+            <textarea id="contact_message" class="form-control" rows="6" placeholder="Description" th:text="${post.description}"></textarea>
+        </div>
+    <div class="form-group">
+        <input id="date" class="form-control" type="data" name="date" rows="6" placeholder="Date" th:value="${post.date}">
+    </div>
+        <div class="form-group">
+            <button class="tm-submit-btn" type="submit" name="submit">Add</button>
+        </div>
+    </div>
+</form>
+
+<div th:insert="~{footer :: footer}">
+    <footer class="tm-black-bg">
+
+    </footer>
+</div>
+
+
+</body>
+</html>

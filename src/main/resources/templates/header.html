@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="tm-header" th:fragment="header">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-6 col-md-4 col-sm-3 tm-site-name-container">
+                <a  href="index" class="tm-site-name">Holiday</a> <span><a href="/?lang=hy">HY</a> |<a href="/?lang=en">EN</a> |<a href="/?lang=ru">Ру</a>  </span>
+
+            </div>
+
+            <div class="col-lg-6 col-md-8 col-sm-9">
+                <div class="mobile-menu-icon">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <nav class="tm-nav">
+                    <ul>
+<!--                        <li><a  th:if="${currentUser == nuul}" class="dropdown-toggle" href="#"  th:text="#{signUp}">Login/Registration</a></li>-->
+<!--                        <li><a  th:if="${currentUser != nuul}" class="dropdown-toggle" href="#"  th:text="#{account}">My account</a></li>-->
+                        <li ><a  href="index"  class="active" th:text="#{home}">Home</a></li>
+                        <li ><a  href="about" th:text="#{about}">About</a></li>
+                        <li><a  href="tours" th:text="#{ourTours}" >Our Tours</a></li>
+                        <li ><a  href="contact" th:text="#{contacts}">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Banner -->
+<section class="tm-banner">
+    <!-- Flexslider -->
+    <div class="flexslider flexslider-banner">
+        <ul class="slides">
+            <li>
+                <div class="tm-banner-inner">
+                    <h1 class="tm-banner-title">Find <span class="tm-yellow-text">Tour</span> Programs</h1>
+                    <p class="tm-banner-subtitle">For Your Destinations</p>
+                    <a href="#more" class="tm-banner-link">Learn More</a>
+                </div>
+                <img src="../img/banner-2.jpg" />
+            </li>
+            <li>
+                <div class="tm-banner-inner">
+                    <h1 class="tm-banner-title">Lorem <span class="tm-yellow-text">Ipsum</span> Dolor</h1>
+                    <p class="tm-banner-subtitle">Wonderful Destinations</p>
+                    <a href="#more" class="tm-banner-link">Learn More</a>
+                </div>
+                <img src="../img/banner-3.jpg" />
+            </li>
+            <li>
+                <div class="tm-banner-inner">
+                    <h1 class="tm-banner-title">Proin <span class="tm-yellow-text">Gravida</span> Nibhvell</h1>
+                    <p class="tm-banner-subtitle">Velit Auctor</p>
+                    <a href="#more" class="tm-banner-link">Learn More</a>
+                </div>
+                <img src="../img/banner-1.jpg" />
+            </li>
+        </ul>
+    </div>
+</section>
+</body>
+</html>
