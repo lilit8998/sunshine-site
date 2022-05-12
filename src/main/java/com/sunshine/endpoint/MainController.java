@@ -39,7 +39,4 @@ public class MainController {
         return "contact";
     }
 
-
-
-
 }
