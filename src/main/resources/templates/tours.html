@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Holiday - Tours</title>
 <!--
-Holiday Template
+Holiday Template  et ejic im desiigns el e kore inqe formov er postn e chi qce menu
+mej
 http://www.templatemo.com/tm-475-holiday
 -->
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
@@ -31,39 +32,28 @@ http://www.templatemo.com/tm-475-holiday
 
 		</header>
 	</div>
-	
 
+	<a href="/add/ticket">Add new Ticket</a>
 
 	<!-- gray bg -->	
 	<section class="container tm-home-section-1" id="more">
 		<div class="row">
-			<div class="col-lg-4 col-md-4 col-sm-6">
-				<!-- Nav tabs -->
-				<div class="tm-home-box-1">
-					<ul class="nav nav-tabs tm-white-bg" role="tablist" id="hotelCarTabs">
-					    <li role="presentation" class="active">
-					    	<a href="#hotel" aria-controls="hotel" role="tab" data-toggle="tab">Hotel</a>
-					    </li>
-					    <li role="presentation">
-					    	<a href="#car" aria-controls="car" role="tab" data-toggle="tab">Car Rental</a>
-					    </li>
-					</ul>
-				</div>								
-			</div>
+
 
 			<div class="col-lg-4 col-md-4 col-sm-6" th:each="ticket : ${tickets}">
 				<div class="tm-home-box-1 tm-home-box-1-2 tm-home-box-1-center">
-					<img src="../img/index-01.jpg" alt="image" class="img-responsive">
-					<a href="#">
+					<img th:src="@{/ticket/image(photoUrlTicket=${ticket.photoUrlTicket})}" alt="image" class="img-responsive">
+
 						<div class="tm-green-gradient-bg tm-city-price-container" >
 							<div th:text="${ticket.ticketTitle}"></div>
-							<div th:text="${ticket.price}">$</div>
+							<div th:text="${ticket.price}"></div>
 							<div th:text="${ticket.duration}"></div>
 							<div>
-								<a th:href="@{/addTicket/(id=${ticket.id})}">Edit</a> | <a th:href="@{/ticket/delete/(id=${ticket.id})}">Delete</a>
+								<a th:href="@{/edit/ticket/(id=${ticket.id})}">Edit</a> | <a th:href="@{/ticket/delete/(id=${ticket.id})}">Delete</a>|
+								<a th:href="@{/ticket/single/page/(id=${ticket.id})}">More</a>
 							</div>
 						</div>
-					</a>			
+
 				</div>				
 			</div>
 

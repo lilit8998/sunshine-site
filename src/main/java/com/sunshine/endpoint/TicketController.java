@@ -1,55 +1,88 @@
 package com.sunshine.endpoint;
 
-import com.sunshine.model.Post;
 import com.sunshine.model.Ticket;
-import com.sunshine.repository.PostRepo;
 import com.sunshine.repository.TicketRepo;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Scanner;
 
 @Controller
 public class TicketController {
     private final TicketRepo ticketRepo;
-    private final PostRepo postRepo;
+@Value("${ticket.upload.dir}")
+private String uploadDirTicket;
 
-    public TicketController(TicketRepo ticketRepo, PostRepo postRepo) {
+    public TicketController(TicketRepo ticketRepo) {
         this.ticketRepo = ticketRepo;
-        this.postRepo = postRepo;
+
     }
 
     @GetMapping("/tours")
-    public String ticket(ModelMap modelMap){
+    public String allTickets(ModelMap modelMap){
         List<Ticket> all = ticketRepo.findAll();
         modelMap.addAttribute("tickets",all);
         return "tours";
     }
 
+
     @GetMapping("ticket/delete")
     public String deleteTicket(@RequestParam("id") int id){
         ticketRepo.deleteById(id);
-        return "redirect:tours";
+        return "redirect:/tours";
     }
 
-    @GetMapping("addTicket")
-    public String saveTicket(@RequestParam("id") Integer id, ModelMap modelMap){
+    @GetMapping("edit/ticket")
+    public String editTicket(@RequestParam("id") Integer id, ModelMap modelMap){
 
         if (id != 0) {
-            modelMap.addAttribute("ticket", ticketRepo.getOne(id));
+            Ticket one = ticketRepo.findById(id).get();
+            modelMap.addAttribute("ticket", one);
         }
         return "addTicket";
     }
 
-
-    @PostMapping("/addTicket")
-    public String addTicket(@ModelAttribute Ticket ticket){
-        ticketRepo.save(ticket);
-        return "redirect:tours";
+    @GetMapping("add/ticket")
+    public String createTicket(ModelMap modelMap){
+            modelMap.addAttribute("ticket", new Ticket());
+       return "addTicket";
     }
+
+  @PostMapping("/add/ticket")
+    public String addTicket(@ModelAttribute Ticket ticket, @RequestParam("image") MultipartFile image) throws IOException {
+      if (image != null){
+
+          String photoUrl = System.currentTimeMillis() + "_"
+              + "_" + image.getOriginalFilename();
+          File fileTicket = new File( uploadDirTicket + photoUrl);
+
+          image.transferTo(fileTicket);
+          ticket.setPhotoUrlTicket(photoUrl);
+      }
+        ticketRepo.save(ticket);
+        return "redirect:/tours";
+    }
+
+    @GetMapping("ticket/single/page")
+    public String singlePage(@RequestParam("id") int id,ModelMap modelMap) {
+        modelMap.addAttribute("ticket", ticketRepo.getOne(id));
+        return "SingleTicketPage";
+    }
+    @GetMapping(value = "/ticket/image")
+    public @ResponseBody
+    byte[] getImage(@RequestParam("photoUrlTicket") String photoUrlTicket) throws IOException{
+        InputStream in = new FileInputStream(uploadDirTicket + File.separator + photoUrlTicket);
+        return IOUtils.toByteArray(in);
+    }
+
 
 }

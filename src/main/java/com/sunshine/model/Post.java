@@ -27,6 +27,9 @@ public class Post {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
+    @Column
+    private String photoUrl;
+
 
 
 
